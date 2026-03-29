@@ -26,7 +26,7 @@ class AffineCipherTest {
 
     @Test
     void testInvalidCoprime() {
-        AffineCipher cipher = new AffineCipher(2, 8); // 2 is not coprime to 26
+        AffineCipher cipher = new AffineCipher(2, 8);
         String message = "HELLO";
         String encrypted = cipher.encrypt(message);
         assertThrows(IllegalArgumentException.class, () -> cipher.decrypt(encrypted));
