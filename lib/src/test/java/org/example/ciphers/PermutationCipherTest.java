@@ -7,9 +7,11 @@ class PermutationCipherTest {
 
     @Test
     void testEncryptDecryptMultipleBlocks() {
-        int[] key = { 2, 3, 0, 1 }; // Block size 4
+        // Block size 4.
+        int[] key = { 2, 3, 0, 1 };
         PermutationCipher cipher = new PermutationCipher(key);
-        String message = "HELLOWORLD12"; // Length 12, multiple of 4
+        // Length 12, multiple of 4.
+        String message = "HELLOWORLD12";
         String encrypted = cipher.encrypt(message);
         String decrypted = cipher.decrypt(encrypted);
         assertEquals(message, decrypted);
@@ -17,9 +19,11 @@ class PermutationCipherTest {
 
     @Test
     void testPartialBlockPadding() {
-        int[] key = { 2, 0, 1 }; // Block size 3
+        // Block size 3.
+        int[] key = { 2, 0, 1 };
         PermutationCipher cipher = new PermutationCipher(key);
-        String message = "HELL"; // Length 4, requires padding in encryption
+        // Length 4, requires padding in encryption.
+        String message = "HELL";
         String encrypted = cipher.encrypt(message);
         String decrypted = cipher.decrypt(encrypted);
         assertEquals(message, decrypted);

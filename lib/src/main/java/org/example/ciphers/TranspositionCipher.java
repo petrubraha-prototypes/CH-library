@@ -56,8 +56,7 @@ public class TranspositionCipher implements Cipher {
         int numRows = (int) Math.ceil((double) ciphertext.length() / numCols);
         char[][] grid = new char[numRows][numCols];
 
-        // Decryption logic:
-        // Calculate the number of full cells in each column
+        // Calculate the number of full cells in each column.
         int fullCells = ciphertext.length();
         int extraCells = fullCells % numCols;
         int[] colHeights = new int[numCols];
@@ -65,13 +64,13 @@ public class TranspositionCipher implements Cipher {
             colHeights[i] = (fullCells / numCols) + (i < extraCells ? 1 : 0);
         }
 
-        // Get sorted order
+        // Get sorted order.
         Integer[] order = new Integer[numCols];
         for (int i = 0; i < numCols; i++)
             order[i] = i;
         Arrays.sort(order, Comparator.comparingInt(i -> key.charAt(i)));
 
-        // Read ciphertext into the columns based on their height in the original order
+        // Read ciphertext into the columns based on their height in the original order.
         int k = 0;
         for (int colIndex : order) {
             for (int rowIndex = 0; rowIndex < colHeights[colIndex]; rowIndex++) {

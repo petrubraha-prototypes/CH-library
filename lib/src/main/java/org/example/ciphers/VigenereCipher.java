@@ -29,8 +29,6 @@ public class VigenereCipher implements Cipher {
             } else {
                 int kIdx = AlphabetUtils.charToIndex(key.charAt(keyIndex % key.length()));
                 if (kIdx == -1) {
-                    // Skip non-alphabet characters in the key and continue with next key char
-                    // However, it's safer to ensure key is correctly processed.
                     // For simplicity, we'll increment keyIndex only on successful mapping.
                     sb.append(c);
                     continue;
