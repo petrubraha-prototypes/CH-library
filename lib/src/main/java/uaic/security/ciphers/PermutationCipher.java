@@ -1,4 +1,4 @@
-package org.example.ciphers;
+package uaic.security.ciphers;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

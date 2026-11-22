@@ -1,4 +1,4 @@
-package org.example.ciphers;
+package uaic.security.ciphers;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

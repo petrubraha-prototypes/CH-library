@@ -1,11 +1,11 @@
-package org.example;
+package uaic.security;
 
-import org.example.ciphers.AffineCipher;
-import org.example.ciphers.Cipher;
-import org.example.ciphers.PermutationCipher;
-import org.example.ciphers.SubstitutionCipher;
-import org.example.ciphers.TranspositionCipher;
-import org.example.ciphers.VigenereCipher;
+import uaic.security.ciphers.AffineCipher;
+import uaic.security.ciphers.Cipher;
+import uaic.security.ciphers.PermutationCipher;
+import uaic.security.ciphers.SubstitutionCipher;
+import uaic.security.ciphers.TranspositionCipher;
+import uaic.security.ciphers.VigenereCipher;
 
 public class Library {
     public static void main(String[] args) {

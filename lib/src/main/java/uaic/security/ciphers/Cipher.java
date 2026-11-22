@@ -1,4 +1,4 @@
-package org.example.ciphers;
+package uaic.security.ciphers;
 
 /**
  * Base interface for all cipher implementations.
