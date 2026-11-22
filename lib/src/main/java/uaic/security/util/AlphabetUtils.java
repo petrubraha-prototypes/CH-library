@@ -1,4 +1,4 @@
-package org.example.util;
+package uaic.security.util;
 
 import lombok.experimental.UtilityClass;
 

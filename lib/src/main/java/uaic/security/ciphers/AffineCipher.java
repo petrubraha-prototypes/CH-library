@@ -1,6 +1,6 @@
-package org.example.ciphers;
+package uaic.security.ciphers;
 
-import org.example.util.AlphabetUtils;
+import uaic.security.util.AlphabetUtils;
 
 import lombok.RequiredArgsConstructor;
 
