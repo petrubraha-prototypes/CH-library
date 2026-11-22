@@ -1,4 +1,4 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 import uaic.security.util.AlphabetUtils;
 
@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 /**
  * Monoalphabetic substitution cipher.
  * Maps each alphabet character to its permutated counterpart.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @RequiredArgsConstructor
-public class SubstitutionCipher implements Cipher {
+public class SubstitutionCipher implements CharCipher {
     @NonNull
     private final String permutatedAlphabet;
 

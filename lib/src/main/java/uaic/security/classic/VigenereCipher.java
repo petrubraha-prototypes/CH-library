@@ -1,4 +1,4 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 import uaic.security.util.AlphabetUtils;
 
@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
 /**
  * Vigenere Cipher implementation.
  * A polyalphabetic substitution cipher based on a keyword.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @RequiredArgsConstructor
-public class VigenereCipher implements Cipher {
+public class VigenereCipher implements CharCipher {
     @NonNull
     private final String key;
 

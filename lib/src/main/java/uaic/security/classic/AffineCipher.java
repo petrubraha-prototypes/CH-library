@@ -1,4 +1,4 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 import uaic.security.util.AlphabetUtils;
 
@@ -8,9 +8,12 @@ import lombok.RequiredArgsConstructor;
  * Implementation of the Affine cipher.
  * E(x) = (ax + b) mod m
  * D(x) = a^-1 (x - b) mod m
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @RequiredArgsConstructor
-public class AffineCipher implements Cipher {
+public class AffineCipher implements CharCipher {
     private final int a;
     private final int b;
 

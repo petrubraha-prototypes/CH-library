@@ -1,9 +1,14 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 /**
- * Base interface for all cipher implementations.
+ * Character-level contract of the classical ciphers, which work on letters
+ * rather than bytes. {@link TextCipherAdapter} exposes them as a
+ * {@link uaic.security.Cipher}.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
-public interface Cipher {
+public interface CharCipher {
     /**
      * Encrypts the given plaintext.
      * 

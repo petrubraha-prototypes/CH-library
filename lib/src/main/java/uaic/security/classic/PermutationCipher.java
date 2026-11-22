@@ -1,4 +1,4 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +7,12 @@ import lombok.RequiredArgsConstructor;
  * Permutation cipher (Block Transposition).
  * Rearranges characters within blocks of text according to a specified
  * permutation key.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @RequiredArgsConstructor
-public class PermutationCipher implements Cipher {
+public class PermutationCipher implements CharCipher {
     @NonNull
     private final int[] permutationKey;
 

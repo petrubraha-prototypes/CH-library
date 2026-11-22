@@ -1,11 +1,11 @@
 package uaic.security;
 
-import uaic.security.ciphers.AffineCipher;
-import uaic.security.ciphers.Cipher;
-import uaic.security.ciphers.PermutationCipher;
-import uaic.security.ciphers.SubstitutionCipher;
-import uaic.security.ciphers.TranspositionCipher;
-import uaic.security.ciphers.VigenereCipher;
+import uaic.security.classic.AffineCipher;
+import uaic.security.classic.CharCipher;
+import uaic.security.classic.PermutationCipher;
+import uaic.security.classic.SubstitutionCipher;
+import uaic.security.classic.TranspositionCipher;
+import uaic.security.classic.VigenereCipher;
 
 public class Library {
     public static void main(String[] args) {
@@ -15,29 +15,29 @@ public class Library {
 
         // 1. Substitution Cipher
         String substitutionAlphabet = "qwertyuiopasdfghjklzxcvbnm";
-        Cipher substitution = new SubstitutionCipher(substitutionAlphabet);
+        CharCipher substitution = new SubstitutionCipher(substitutionAlphabet);
         demonstrate(substitution, "Substitution Cipher", message);
 
         // 2. Permutation Cipher (Block Transposition)
         // A permutation of [0, 1, 2, 3]
         int[] permutationKey = { 2, 3, 0, 1 };
-        Cipher permutation = new PermutationCipher(permutationKey);
+        CharCipher permutation = new PermutationCipher(permutationKey);
         demonstrate(permutation, "Permutation Cipher (Block Transposition)", message);
 
         // 3. Transposition Cipher (Columnar)
-        Cipher transposition = new TranspositionCipher("SECRET");
+        CharCipher transposition = new TranspositionCipher("SECRET");
         demonstrate(transposition, "Transposition Cipher (Columnar)", message);
 
         // 4. Affine Cipher (a must be coprime to 26; e.g., 5 and 8)
-        Cipher affine = new AffineCipher(5, 8);
+        CharCipher affine = new AffineCipher(5, 8);
         demonstrate(affine, "Affine Cipher", message);
 
         // 5. Vigenere Cipher
-        Cipher vigenere = new VigenereCipher("KEYWORD");
+        CharCipher vigenere = new VigenereCipher("KEYWORD");
         demonstrate(vigenere, "Vigenere Cipher", message);
     }
 
-    private static void demonstrate(Cipher cipher, String name, String message) {
+    private static void demonstrate(CharCipher cipher, String name, String message) {
         System.out.println("Demo: " + name);
         String encrypted = cipher.encrypt(message);
         String decrypted = cipher.decrypt(encrypted);
