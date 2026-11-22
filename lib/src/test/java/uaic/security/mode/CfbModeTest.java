@@ -68,4 +68,16 @@ class CfbModeTest {
     void rejectsIvOfTheWrongLength() {
         assertThrows(IllegalArgumentException.class, () -> new CfbMode(blockCipher, new byte[2]));
     }
+
+    /** NIST SP 800-38A, F.3.13 and F.3.14: CFB128-AES128. */
+    @Test
+    void matchesNistSp80038aWithAes128() {
+        Cipher cipher = new CfbMode(Sp80038aVectors.aes128(), Sp80038aVectors.INITIALIZATION_VECTOR);
+        byte[] ciphertext = Bytes.fromHex("3b3fd92eb72dad20333449f8e83cfb4a"
+                + "c8a64537a0b3a93fcde3cdad9f1ce58b"
+                + "26751f67a3cbb140b1808cf187a4f4df"
+                + "c04b05357c5d1c0eeac4c66f9ff7f2e6");
+        assertArrayEquals(ciphertext, cipher.encrypt(Sp80038aVectors.PLAINTEXT));
+        assertArrayEquals(Sp80038aVectors.PLAINTEXT, cipher.decrypt(ciphertext));
+    }
 }

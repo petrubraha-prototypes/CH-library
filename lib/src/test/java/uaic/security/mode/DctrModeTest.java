@@ -36,6 +36,13 @@ class DctrModeTest {
     }
 
     @Test
+    void defaultMatchesCtrStartingAtOneWithAes128() {
+        Cipher ctr = new CtrMode(Sp80038aVectors.aes128(), Bytes.fromHex("00000000000000000000000000000001"));
+        Cipher dctr = new DctrMode(Sp80038aVectors.aes128());
+        assertArrayEquals(ctr.encrypt(Sp80038aVectors.PLAINTEXT), dctr.encrypt(Sp80038aVectors.PLAINTEXT));
+    }
+
+    @Test
     void sameMessageAlwaysGivesTheSameCiphertext() {
         byte[] first = new DctrMode(blockCipher).encrypt(MESSAGE);
         byte[] second = new DctrMode(blockCipher).encrypt(MESSAGE);

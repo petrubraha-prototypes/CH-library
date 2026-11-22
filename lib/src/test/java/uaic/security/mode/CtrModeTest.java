@@ -68,4 +68,16 @@ class CtrModeTest {
     void rejectsCounterOfTheWrongLength() {
         assertThrows(IllegalArgumentException.class, () -> new CtrMode(blockCipher, new byte[5]));
     }
+
+    /** NIST SP 800-38A, F.5.1 and F.5.2: CTR-AES128. */
+    @Test
+    void matchesNistSp80038aWithAes128() {
+        Cipher cipher = new CtrMode(Sp80038aVectors.aes128(), Bytes.fromHex("f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"));
+        byte[] ciphertext = Bytes.fromHex("874d6191b620e3261bef6864990db6ce"
+                + "9806f66b7970fdff8617187bb9fffdff"
+                + "5ae4df3edbd5d35e5b4f09020db03eab"
+                + "1e031dda2fbe03d1792170a0f3009cee");
+        assertArrayEquals(ciphertext, cipher.encrypt(Sp80038aVectors.PLAINTEXT));
+        assertArrayEquals(Sp80038aVectors.PLAINTEXT, cipher.decrypt(ciphertext));
+    }
 }
