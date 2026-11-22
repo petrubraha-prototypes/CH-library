@@ -77,4 +77,16 @@ class CbcModeTest {
         Cipher cbc = new CbcMode(blockCipher, IV, new Pkcs7Padding());
         assertThrows(IllegalArgumentException.class, () -> cbc.decrypt(new byte[5]));
     }
+
+    /** NIST SP 800-38A, F.2.1 and F.2.2: CBC-AES128. */
+    @Test
+    void matchesNistSp80038aWithAes128() {
+        Cipher cipher = new CbcMode(Sp80038aVectors.aes128(), Sp80038aVectors.INITIALIZATION_VECTOR, new NoPadding());
+        byte[] ciphertext = Bytes.fromHex("7649abac8119b246cee98e9b12e9197d"
+                + "5086cb9b507219ee95db113a917678b2"
+                + "73bed6b8e3c1743b7116e69e22229516"
+                + "3ff1caa1681fac09120eca307586e1a7");
+        assertArrayEquals(ciphertext, cipher.encrypt(Sp80038aVectors.PLAINTEXT));
+        assertArrayEquals(Sp80038aVectors.PLAINTEXT, cipher.decrypt(ciphertext));
+    }
 }

@@ -48,4 +48,16 @@ class OfbModeTest {
     void rejectsIvOfTheWrongLength() {
         assertThrows(IllegalArgumentException.class, () -> new OfbMode(blockCipher, new byte[8]));
     }
+
+    /** NIST SP 800-38A, F.4.1 and F.4.2: OFB-AES128. */
+    @Test
+    void matchesNistSp80038aWithAes128() {
+        Cipher cipher = new OfbMode(Sp80038aVectors.aes128(), Sp80038aVectors.INITIALIZATION_VECTOR);
+        byte[] ciphertext = Bytes.fromHex("3b3fd92eb72dad20333449f8e83cfb4a"
+                + "7789508d16918f03f53c52dac54ed825"
+                + "9740051e9c5fecf64344f7a82260edcc"
+                + "304c6528f659c77866a510d9c1d6ae5e");
+        assertArrayEquals(ciphertext, cipher.encrypt(Sp80038aVectors.PLAINTEXT));
+        assertArrayEquals(Sp80038aVectors.PLAINTEXT, cipher.decrypt(ciphertext));
+    }
 }

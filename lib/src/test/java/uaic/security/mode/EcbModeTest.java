@@ -71,4 +71,16 @@ class EcbModeTest {
         Cipher ecb = new EcbMode(blockCipher, new Pkcs7Padding());
         assertThrows(IllegalArgumentException.class, () -> ecb.decrypt(counting(6)));
     }
+
+    /** NIST SP 800-38A, F.1.1 and F.1.2: ECB-AES128. */
+    @Test
+    void matchesNistSp80038aWithAes128() {
+        Cipher cipher = new EcbMode(Sp80038aVectors.aes128(), new NoPadding());
+        byte[] ciphertext = Bytes.fromHex("3ad77bb40d7a3660a89ecaf32466ef97"
+                + "f5d3d58503b9699de785895a96fdbaaf"
+                + "43b1cd7f598ece23881b00e3ed030688"
+                + "7b0c785e27e8ad3f8223207104725dd4");
+        assertArrayEquals(ciphertext, cipher.encrypt(Sp80038aVectors.PLAINTEXT));
+        assertArrayEquals(Sp80038aVectors.PLAINTEXT, cipher.decrypt(ciphertext));
+    }
 }
