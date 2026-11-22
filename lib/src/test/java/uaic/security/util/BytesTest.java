@@ -110,4 +110,29 @@ class BytesTest {
         Bytes.writeIntLittleEndian(0x89abcdef, target, 0);
         assertEquals(0x89abcdef, Bytes.readIntLittleEndian(target, 0));
     }
+
+    /** Examples of the littleendian function from the Salsa20 specification, section 7. */
+    @Test
+    void toIntsLittleEndianMatchesTheSalsa20SpecificationExamples() {
+        byte[] bytes = { 0, 0, 0, 0, 86, 75, 30, 9, (byte) 255, (byte) 255, (byte) 255, (byte) 250 };
+        int[] expected = { 0x00000000, 0x091e4b56, 0xfaffffff };
+        assertArrayEquals(expected, Bytes.toIntsLittleEndian(bytes));
+    }
+
+    @Test
+    void toIntsLittleEndianRejectsPartialWords() {
+        assertThrows(IllegalArgumentException.class, () -> Bytes.toIntsLittleEndian(new byte[5]));
+    }
+
+    @Test
+    void fromIntsLittleEndianUnpacksEachWord() {
+        int[] words = { 0x04030201, 0x08070605 };
+        assertArrayEquals(Bytes.fromHex("0102030405060708"), Bytes.fromIntsLittleEndian(words));
+    }
+
+    @Test
+    void wordArrayRoundTrip() {
+        byte[] bytes = Bytes.fromHex("00112233445566778899aabbccddeeff");
+        assertArrayEquals(bytes, Bytes.fromIntsLittleEndian(Bytes.toIntsLittleEndian(bytes)));
+    }
 }
