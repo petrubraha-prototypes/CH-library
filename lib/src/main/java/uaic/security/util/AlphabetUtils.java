@@ -4,6 +4,9 @@ import lombok.experimental.UtilityClass;
 
 /**
  * Common alphabet constants and utility methods for ciphers.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @UtilityClass
 public class AlphabetUtils {
