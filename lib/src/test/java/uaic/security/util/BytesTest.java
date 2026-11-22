@@ -150,4 +150,21 @@ class BytesTest {
     void fromLongBigEndianPutsHighestByteFirst() {
         assertArrayEquals(Bytes.fromHex("fedcba9876543210"), Bytes.fromLongBigEndian(0xfedcba9876543210L));
     }
+
+    @Test
+    void toIntsBigEndianPutsFirstByteHighest() {
+        int[] expected = { 0x2b7e1516, 0x28aed2a6 };
+        assertArrayEquals(expected, Bytes.toIntsBigEndian(Bytes.fromHex("2b7e151628aed2a6")));
+    }
+
+    @Test
+    void toIntsBigEndianRejectsPartialWords() {
+        assertThrows(IllegalArgumentException.class, () -> Bytes.toIntsBigEndian(new byte[6]));
+    }
+
+    @Test
+    void fromIntsBigEndianPutsHighestByteFirst() {
+        int[] words = { 0x01020304, 0xa0fafe17 };
+        assertArrayEquals(Bytes.fromHex("01020304a0fafe17"), Bytes.fromIntsBigEndian(words));
+    }
 }

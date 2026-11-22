@@ -1,5 +1,7 @@
 package uaic.security.util;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.HexFormat;
 
 import lombok.experimental.UtilityClass;
@@ -116,15 +118,7 @@ public class Bytes {
      * @throws IllegalArgumentException if the length is not a multiple of four
      */
     public static int[] toIntsLittleEndian(byte[] bytes) {
-        if (bytes.length % Integer.BYTES != 0) {
-            throw new IllegalArgumentException(
-                    "Byte count must be a multiple of " + Integer.BYTES + ", got " + bytes.length);
-        }
-        int[] words = new int[bytes.length / Integer.BYTES];
-        for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
-            words[wordIndex] = readIntLittleEndian(bytes, wordIndex * Integer.BYTES);
-        }
-        return words;
+        return toInts(bytes, ByteOrder.LITTLE_ENDIAN);
     }
 
     /**
@@ -134,11 +128,44 @@ public class Bytes {
      * @return four bytes per word
      */
     public static byte[] fromIntsLittleEndian(int[] words) {
-        byte[] bytes = new byte[words.length * Integer.BYTES];
-        for (int wordIndex = 0; wordIndex < words.length; wordIndex++) {
-            writeIntLittleEndian(words[wordIndex], bytes, wordIndex * Integer.BYTES);
+        return fromInts(words, ByteOrder.LITTLE_ENDIAN);
+    }
+
+    /**
+     * Packs every four bytes into one big-endian 32-bit word.
+     *
+     * @param bytes an array whose length is a multiple of four
+     * @return the words, one per four bytes
+     * @throws IllegalArgumentException if the length is not a multiple of four
+     */
+    public static int[] toIntsBigEndian(byte[] bytes) {
+        return toInts(bytes, ByteOrder.BIG_ENDIAN);
+    }
+
+    /**
+     * Unpacks each 32-bit word into four bytes, most significant byte first.
+     *
+     * @param words the words to unpack
+     * @return four bytes per word
+     */
+    public static byte[] fromIntsBigEndian(int[] words) {
+        return fromInts(words, ByteOrder.BIG_ENDIAN);
+    }
+
+    private static int[] toInts(byte[] bytes, ByteOrder byteOrder) {
+        if (bytes.length % Integer.BYTES != 0) {
+            throw new IllegalArgumentException(
+                    "Byte count must be a multiple of " + Integer.BYTES + ", got " + bytes.length);
         }
-        return bytes;
+        int[] words = new int[bytes.length / Integer.BYTES];
+        ByteBuffer.wrap(bytes).order(byteOrder).asIntBuffer().get(words);
+        return words;
+    }
+
+    private static byte[] fromInts(int[] words, ByteOrder byteOrder) {
+        ByteBuffer buffer = ByteBuffer.allocate(words.length * Integer.BYTES).order(byteOrder);
+        buffer.asIntBuffer().put(words);
+        return buffer.array();
     }
 
     /**
