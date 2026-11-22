@@ -135,4 +135,19 @@ class BytesTest {
         byte[] bytes = Bytes.fromHex("00112233445566778899aabbccddeeff");
         assertArrayEquals(bytes, Bytes.fromIntsLittleEndian(Bytes.toIntsLittleEndian(bytes)));
     }
+
+    @Test
+    void toLongBigEndianPutsFirstByteHighest() {
+        assertEquals(0x0123456789abcdefL, Bytes.toLongBigEndian(Bytes.fromHex("0123456789abcdef")));
+    }
+
+    @Test
+    void toLongBigEndianRejectsOtherLengths() {
+        assertThrows(IllegalArgumentException.class, () -> Bytes.toLongBigEndian(new byte[7]));
+    }
+
+    @Test
+    void fromLongBigEndianPutsHighestByteFirst() {
+        assertArrayEquals(Bytes.fromHex("fedcba9876543210"), Bytes.fromLongBigEndian(0xfedcba9876543210L));
+    }
 }

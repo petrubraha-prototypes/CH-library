@@ -140,4 +140,37 @@ public class Bytes {
         }
         return bytes;
     }
+
+    /**
+     * Reads eight bytes as a 64-bit value, most significant byte first.
+     *
+     * @param bytes exactly eight bytes
+     * @return the packed value
+     * @throws IllegalArgumentException if the length is not eight
+     */
+    public static long toLongBigEndian(byte[] bytes) {
+        if (bytes.length != Long.BYTES) {
+            throw new IllegalArgumentException("Expected " + Long.BYTES + " bytes, got " + bytes.length);
+        }
+        long value = 0;
+        for (byte currentByte : bytes) {
+            value = (value << Byte.SIZE) | (currentByte & BYTE_MASK);
+        }
+        return value;
+    }
+
+    /**
+     * Writes a 64-bit value as eight bytes, most significant byte first.
+     *
+     * @param value the value to unpack
+     * @return eight bytes
+     */
+    public static byte[] fromLongBigEndian(long value) {
+        byte[] bytes = new byte[Long.BYTES];
+        for (int byteIndex = 0; byteIndex < Long.BYTES; byteIndex++) {
+            int shift = (Long.BYTES - 1 - byteIndex) * Byte.SIZE;
+            bytes[byteIndex] = (byte) (value >>> shift);
+        }
+        return bytes;
+    }
 }
