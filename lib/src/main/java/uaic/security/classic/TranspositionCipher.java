@@ -1,4 +1,4 @@
-package uaic.security.ciphers;
+package uaic.security.classic;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,9 +8,12 @@ import java.util.Comparator;
 /**
  * Columnar Transposition Cipher.
  * Rearranges message in columns based on an alphabetical key.
+ *
+ * <p>
+ * <strong>Educational, insecure, not for production.</strong>
  */
 @RequiredArgsConstructor
-public class TranspositionCipher implements Cipher {
+public class TranspositionCipher implements CharCipher {
     @NonNull
     private final String key;
 
