@@ -8,7 +8,18 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    // Runs the interactive demo with ./gradlew run.
+    application
     jacoco
+}
+
+application {
+    mainClass = "uaic.security.demo.CryptoDemo"
+}
+
+tasks.named<JavaExec>("run") {
+    // Lets the demo prompt for missing fields on the console.
+    standardInput = System.`in`
 }
 
 repositories {
