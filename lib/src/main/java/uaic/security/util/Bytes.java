@@ -23,6 +23,12 @@ public class Bytes {
      * Parses a hexadecimal string, ignoring any whitespace so that test
      * vectors can be pasted as printed in the standards.
      *
+     * <p>
+     * Hex is the project's text form for binary values: arbitrary bytes have no
+     * safe printable form, the standards publish their vectors in hex, and the
+     * demo CLI must accept keys/IVs/ciphertext as typeable argv. Used only at
+     * the edges (CLI, tests); ciphers operate on {@code byte[]}.
+     *
      * @param hex pairs of hex digits, optionally separated by whitespace
      * @return the decoded bytes
      * @throws IllegalArgumentException if the string is not valid hex
@@ -33,7 +39,8 @@ public class Bytes {
     }
 
     /**
-     * Formats bytes as lower-case hexadecimal without separators.
+     * Formats bytes as lower-case hexadecimal without separators. The text form
+     * for binary CLI/test output; see {@link #fromHex(String)} for why hex.
      *
      * @param bytes the bytes to format
      * @return two hex digits per byte
