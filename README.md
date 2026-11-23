@@ -84,6 +84,59 @@ Leave out any trailing fields to be prompted for them; invalid answers are rejec
 
 An invalid command-line value prints the usage and exits with a non-zero status.
 
+### CLI Examples
+
+The examples go from the simplest call to one that uses every parameter. Each shows the printed result. Text containing spaces goes in single quotes inside `--args`.
+
+1. A classical cipher takes only a cipher, an operation, a text key and the text:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="vigenere encrypt KEY 'Attack at dawn'"
+   # Kxrkgi kx bkal
+   ```
+
+2. Some classical keys have a structure, such as the affine `a,b` pair:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="affine decrypt 5,8 Rclla"
+   # Hello
+   ```
+
+3. A byte cipher reads the key and the input as hex. Encrypting zeros with RC4 prints the keystream of RFC 6229:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="rc4 encrypt 0102030405 00000000000000000000000000000000"
+   # b2396305f03dc027ccc3524a0a1118a8
+   ```
+
+4. ChaCha20 adds a 12-byte nonce. The input is "Ladies and Gentlemen", the start of the RFC 8439 section 2.4.2 example:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="chacha20 encrypt 000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f 000000000000004a00000000 4c616469657320616e642047656e746c656d656e"
+   # 6e2e359a2568f98041ba0728dd0d6981e97e7aec
+   ```
+
+5. A block cipher adds a mode. ECB needs no IV; the 3DES key is the K1 | K2 | K3 bundle, and PKCS#7 appends a padding block to the NIST CAVP ciphertext `426a0ac26586bf6c`:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="3des encrypt e97c8313ba265d43254cbf9e8f7c2aa8a754d65e8ae997e3 ecb 4656ed81a8bc58a9"
+   # 426a0ac26586bf6cf2412503121a5842
+   ```
+
+6. dCTR also needs no IV, since it always starts from counter 1. Decrypting the result with the same key returns `48656c6c6f` ("Hello"):
+
+   ```bash
+   ./gradlew -q --console=plain run --args="aes128 encrypt 2b7e151628aed2a6abf7158809cf4f3c dctr 48656c6c6f"
+   # 1f77112c5b
+   ```
+
+7. Every parameter: cipher, operation, key, IV, mode and input. The first block is the NIST SP 800-38A F.2.1 ciphertext, followed by the PKCS#7 padding block:
+
+   ```bash
+   ./gradlew -q --console=plain run --args="aes128 encrypt 2b7e151628aed2a6abf7158809cf4f3c 000102030405060708090a0b0c0d0e0f cbc 6bc1bee22e409f96e93d7e117393172a"
+   # 7649abac8119b246cee98e9b12e9197d8964e0b149c10b7b682e6e39aaeb731c
+   ```
+
 ## Usage Example
 
 ```java
